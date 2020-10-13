@@ -9,7 +9,7 @@ Test this function by hand in the console to get it working, and when you think 
 
 // Write your code here
 function sum(a, b) { //eslint-disable-line
-  var sum =  a + b;
+  var sum = a + b;
   var str = `The sum of ${a} and ${b} is ${sum}.`;
   console.log(sum, str);
 
@@ -34,7 +34,7 @@ function multiply(a, b) { //eslint-disable-line
   var sum = a * b;
   var str = `The product of ${a} and ${b} is ${sum}.`;
   console.log(sum, str);
-  
+
   return [sum, str];
 }
 
@@ -55,12 +55,46 @@ IMPORTANT DETAIL: You may not use the arithmetic operators + and * in this funct
 Test this function by hand in the console to get it working, and when you think it is finished, uncomment the call for the testSumAndMultiply() function and see if the test passes.*/
 
 // Write your code here
-function sumAndMultiply(a, b, c) { //eslint-disable-line
+function sumAndMultiply(a, b, c) {
+  var sum = getSum(a, getSum(b, c));
+  var product = getProduct(a, getProduct(b, c));
+  var strOne = `${a} and ${b} and ${c} sum to ${sum}.`;
+  var strTwo = `The product of ${a} and ${b} and ${c} is ${product}.`;
+  return [sum, product, strOne, strTwo];
+}
 
+//
+// Use bitwise operators with recursive call to find the sum of a and b.
+// '^' XOR, sets each bit to 1 if only one of two bits is 1.
+// '&' AND, sets each bit to 1 if both bits are 1.
+// '<<' Zero fill left shift, shifts left by pushing zeros in from the right and let the leftmost bits fall off.
+// Continue to a XOR b until zero fill left shifting a AND b becomes zero.
+//
+
+function getSum(a, b) {
+  if (b == 0) {
+    return a; //base case
+  } else {
+    return getSum(a ^ b, (a & b) << 1);
+  }
+}
+
+//
+// Use some algebra magic to multiply without "*".
+// a*b == a/(1/b)
+// Can get the product by dividing a by a ratio of 1/b, when b is a non zero value.
+//
+
+function getProduct(a, b) {
+  if (b == 0) {
+    return 0;
+  } else {
+    return a / (1 / b);
+  }
 }
 
 // Here is the test for sumAndMultiply(); uncomment it to run it
-// testSumAndMultiply(4,7,5);
+testSumAndMultiply(4, 7, 5);
 
 // Once you get the test passing, do an a-c-p cycle and synchronize the code between GitHub and your laptop. Don't forget to create a new branch for your work on the next question!
 
@@ -124,7 +158,7 @@ This function should be dynamic, accepting an array of any length.
 Test this function by hand in the console to get it working, and when you think it is finished, uncomment the call for the testMultiplyAnyArray() function and see if the test passes.*/
 
 // Write your code here
-var testDynamicArray = [1,2,3,4,5]; //eslint-disable-line
+var testDynamicArray = [1, 2, 3, 4, 5]; //eslint-disable-line
 
 function multiplyAnyArray(dynamicArray) { //eslint-disable-line
 
